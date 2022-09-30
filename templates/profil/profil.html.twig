@@ -6,8 +6,9 @@
 <h1 class="text-center text-info text-uppercase">
 Mes informations personnelles 
 </h1>
-<form action="" method="post">
-
+<form action="" method="post" enctype="multipart/form-data">
+<label for="picture" class="label-file">Choisir son image de profil</label>
+<input type="file" name="picture" id="picture" class="input-file">
 <select class="form-select" aria-label="Default select example" name="age">
   <option selected>Age : </option>
 {% for i in 18..100 %}
@@ -17,10 +18,7 @@ Mes informations personnelles
   <option value="{{i}}">{{i}}</option>
 {% endfor %}
 </select>
-
 <button type="submit">valider</button>
-
-
 </form>
        
 
