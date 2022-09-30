@@ -35,8 +35,15 @@ class RegisterController extends AbstractController
                 $hashedPassword = $hash->hashPassword($user, $userForm->getPassword());
                 $userForm->setPassword($hashedPassword);
                 $userForm->setCreatedAt(new DateTimeImmutable());
+                // $userForm->setRoles(['ROLE_USER']);
                 $entityManager->persist($userForm);
                 $entityManager->flush();
+                
+                $this->addFlash(
+                 'success',
+                 'Votre compte a été enregistrer avec succès !'
+                );
+                return $this->redirectToRoute('app_login');
             }
             // dd($userForm, $plainPassword, $hashedPassword);
         }
