@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\ProfilRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ProfilRepository;
+use Symfony\Component\Validator\Constraints\Length;
 
 #[ORM\Entity(repositoryClass: ProfilRepository::class)]
 class Profil
@@ -23,6 +24,10 @@ class Profil
     private ?string $Country = null;
 
     #[ORM\Column(nullable: true)]
+    #[Length(
+        max: 10,
+        maxMessage: 'Votre numéro de téléphone doit contenir 10 chiffres'
+    )]
     private ?int $phone = null;
 
     #[ORM\OneToOne(inversedBy: 'profil', cascade: ['persist', 'remove'])]
