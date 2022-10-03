@@ -38,12 +38,13 @@ class ProfilType extends AbstractType
                 'constraints' => [
                     new File(
                         [
-                            'maxSize' => '3000k',
+
                             'mimeTypes' => [
                                 'image/jpg',
                                 'iamge/gif',
                                 'image/jpeg',
                                 'image/svg',
+                                'image/png',
                             ],
                             'mimeTypesMessage' => 's\'il vous plait choissisez un format d\'image valide ',
                         ]
