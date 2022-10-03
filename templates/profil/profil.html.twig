@@ -4,13 +4,13 @@
 
 {% block content %}
 
-{% for message in app.flashes('success') %}
+{# {% for message in app.flashes('success') %}
     <div class="flash-success">
         <div class="alert alert-success" role="alert">
           {{message}}
         </div>
     </div>   
-{% endfor %}
+{% endfor %} #}
 <h1 class="text-center text-secondary text-uppercase mt-3 mb-5 ">
 Mes informations personnelles 
 </h1>
@@ -39,7 +39,6 @@ Mes informations personnelles
 <button type="submit" class="btn btn-outline-success mt-3">valider</button>
 </form>
  </div>
-
  <div class="col-xs-12 col-md-6 d-flex flex-column align-items-right gap-2">
  <h3 class="text-dark text-center text-uppercase mt-2">
  mes infos de connexion
@@ -59,12 +58,9 @@ nom de famille : <span class="text-dark mx-2 text-lowercase fs-6">{{app.user.las
  <a href="#" class="text-info text-decoration-none ">Editer mon mot de passe</a>
  <a href="#" class="text-info text-decoration-none">Editer mon email</a>
  <a href="#" class="text-info text-decoration-none">Editer mes infos personnelles</a>
-
  <button class="btn btn-outline-info" >Ajouter une adresse</button>
  </div>
 </div>
 </div>
        
-
-
 {% endblock %}
