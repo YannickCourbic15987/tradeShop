@@ -33,7 +33,9 @@ class ProfilController extends AbstractController
 
         $profil = new Profil();
         //pour récupérer les information d'un formulaire classique 
-        if ($request->request->count() > 0) {
+        if ($request->request
+            ->count() > 0
+        ) {
 
             // if($request->request->get('phone'))
             //pour accéder au information d'un formulaire classique , il suffit juste d'uliser request->get('name')
