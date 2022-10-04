@@ -1,41 +1,50 @@
 {% extends "base.html.twig" %}
-{% block title %}édition du profil{% endblock %}
+{% block title %}édition du profil
+{% endblock %}
 
 {% block content %}
-<div class="container">
-<div class="row">
+	<div class="container">
+		<div class="row">
 
-<h1 class="text-primary text-center mb-5"><span class="text-capitalize">édition</span>  de mon profil</h1>
-<div class="col-xs-12 col-md-6 mt-2 d-flex flex-column align-items-center">
- <img src="{{asset("/uploads/profils/" ~ profilRepository.pictureProfil )}}" alt="" height ="300px" width="300px" class="rounded-circle border border-2 border-dark" id="oldpictureProfil">
-<div class="mx-auto">
- <a href="{{path("app_profil")}}" role="button" class="btn btn-info text-uppercase text-light mt-5">retour</a>
-</div>
-</div>
- <div class="col-xs-12 col-md-6 mt-2">
- 
- 
-{{ form_start(form , {'attr' : {'enctype' : 'multipart/form-data'}}) }}
-{# <form action="" method="post" enctype="multipart/form-data"> #}
-<main id="main">
-{# <label for="file_upload_input" class="label-file">Choisir son image de profil</label>
-<input type="file" name="file_upload_input"  class="input-file" accept="image/jpeg ,image/png ,image/gif" id="file_upload_input"> #}
-{{ form_row(form.pictureProfil) }}
-</main>
-<label for="age" class="form-label mt-2 mb-2">Mon âge</label>
-<select class="form-select" aria-label="Default select example" name="age">
-  <option selected>Age : {{profilRepository.Age}} ans </option>
-{% for i in 18..100 %}
-  <option value="{{i}}">{{i}}</option>
-{% endfor %}
-</select>
-{# <label for="phone" class="form-label mt-3" require>Numéro de téléphone : </label>
-<input type="tel" name="phone" id="phone" class="form-control">
-<button type="submit" class="btn btn-outline-success mt-3">valider</button> #}
+			<h1 class="text-primary text-center mb-5">
+				<span class="text-capitalize">édition</span>
+				de mon profil</h1>
+			<div class="col-xs-12 col-md-6 mt-2 d-flex flex-column align-items-center">
+				<img src="{{asset("/uploads/profils/" ~ profilRepository.pictureProfil )}}" alt="" height="300px" width="300px" class="rounded-circle border border-2 border-dark" id="oldpictureProfil">
+				<div class="mx-auto">
+					{{ form_start(form , {'attr' : {'enctype' : 'multipart/form-data'}}) }}
+					<main
+						id="main">
+						{# <label for="file_upload_input" class="label-file">Choisir son image de profil</label>
+																														<input type="file" name="file_upload_input"  class="input-file" accept="image/jpeg ,image/png ,image/gif" id="file_upload_input"> #}
+						{{ form_row(form.pictureProfil) }}
+					</main>
 
-{{form_row(form.phone , {'attr' : {'value' :  profilRepository.phone}})}}
-{{ form_end(form) }}
 
- </div>
+					<a href="{{path("app_profil")}}" role="button" class="btn btn-info text-uppercase text-light mt-5">retour</a>
+				</div>
+			</div>
+			<div
+				class="col-xs-12 col-md-6 mt-2">
 
-{% endblock %}
+
+				{# <form action="" method="post" enctype="multipart/form-data"> #}
+
+				<label for="age" class="form-label mt-2 mb-2">Mon âge</label>
+				<select class="form-select" aria-label="Default select example" name="age">
+					<option selected>Age :
+					</option>
+					{% for i in 18..100 %}
+						<option value="{{i}}">{{i}}</option>
+					{% endfor %}
+				</select>
+				{# <label for="phone" class="form-label mt-3" require>Numéro de téléphone : </label>
+																																								<input type="tel" name="phone" id="phone" class="form-control">
+																																								<button type="submit" class="btn btn-outline-success mt-3">valider</button> #}
+
+				{{form_row(form.phone , {'attr' : {'value' :  profilRepository.phone}})}}
+				{{ form_end(form) }}
+
+			</div>
+
+		{% endblock %}

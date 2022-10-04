@@ -22,7 +22,12 @@ class HomeController extends AbstractController
     #[Route('/home', name: 'app_home')]
     public function index(): Response
     {
-        $profilRepository = $this->doctrine->getRepository(Profil::class)->findOneBy(['id_User' => $this->security->getUser()->getId()]);
+        if (!empty($this->security->getUser())) {
+            $profilRepository = $this->doctrine->getRepository(Profil::class)->findOneBy(['id_User' => $this->security->getUser()->getId()]);
+        } else {
+            $profilRepository = null;
+        }
+
 
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',

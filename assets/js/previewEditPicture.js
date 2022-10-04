@@ -1,43 +1,34 @@
-//***************************************Upload IMAGE ******************* */
-// const file_upload_input = document.querySelector("#file_upload_input");
-
-const file_upload_input = document.querySelector("#profil_pictureProfil");
+/************Edit IMAGE */
+const profilEdit = document.querySelector("#profil_edit_pictureProfil");
 const labelFile = document.querySelector(".label-file");
+const oldpictureProfil = document.querySelector("#oldpictureProfil");
 
-if (file_upload_input) {
-  file_upload_input.addEventListener("change", previewFile);
+if (profilEdit) {
+  profilEdit.addEventListener("change", previewEditFile);
 
-  function previewFile() {
-    const file_extension_regex = /\.(jpe?g|png|gif)$/i;
-
-    if (
-      this.files.length === 0 ||
-      !file_extension_regex.test(this.files[0].name)
-    ) {
+  function previewEditFile() {
+    const regex_file = /\.(jpe?g|png|gif)$/i;
+    if (this.files.length === 0 || !regex_file.test(this.files[0].name)) {
       return;
     }
     console.log("ce fichier est ok");
-    const file = this.files[0];
-
-    const file_reader = new FileReader();
-
-    file_reader.readAsDataURL(file);
-
-    file_reader.addEventListener("load", (event) => {
-      displayImage(event, file);
-      // labelFile.style.color = "crimson"
+    const files = this.files[0];
+    const files_reader = new FileReader();
+    files_reader.readAsDataURL(files);
+    files_reader.addEventListener("load", (event) => {
+      displayImage(event, files);
       labelFile.style.display = "none";
+      oldpictureProfil.style.display = "none";
     });
   }
-
-  function displayImage(event, file) {
+  function displayImage(event, files) {
     const figureElement = document.createElement("figure");
     figureElement.id = "imageSelected";
     const pictureProfil = document.createElement("img");
     pictureProfil.id = "pictureProfil";
     pictureProfil.src = event.target.result;
     const figcaptionElement = document.createElement("figcaption");
-    figcaptionElement.textContent = `fichier selectionné : ${file.name}`;
+    figcaptionElement.textContent = `fichier selectionné : ${files.name}`;
     const deletePicture = document.createElement("button");
     deletePicture.id = "imageDeleteBtn";
     deletePicture.className = "btn btn-close btn-danger ";
@@ -52,7 +43,8 @@ if (file_upload_input) {
     deletePicture.addEventListener("click", (event) => {
       if (confirm(" Êtes-vous de supprimer ? ")) {
         labelFile.style.display = "";
-        file_upload_input.value = "";
+        profilEdit.value = "";
+        oldpictureProfil.style.display = "";
         event.target.parentElement.remove();
       }
     });

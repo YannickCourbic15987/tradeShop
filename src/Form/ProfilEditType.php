@@ -22,9 +22,10 @@ class ProfilEditType extends AbstractType
                 'attr' => [
                     'class' => 'input-file ',
                     // 'id' => 'file_upload_input',
+                    'role' => 'button'
                 ],
                 'mapped' => false,
-                'label' => 'Choisir son image de profil',
+                'label' => 'Modifier mon image de profil',
                 'label_attr' => [
                     'class' => 'label-file',
 
