@@ -1,3 +1,4 @@
+//***************************************Upload IMAGE ******************* */
 // const file_upload_input = document.querySelector("#file_upload_input");
 const file_upload_input = document.querySelector("#profil_pictureProfil");
 const labelFile = document.querySelector(".label-file");
@@ -52,4 +53,17 @@ function displayImage(event, file) {
       event.target.parentElement.remove();
     }
   });
+}
+
+/************Edit IMAGE */
+const profil_edit_pictureProfil = document.querySelector(
+  "#profil_edit_pictureProfil"
+);
+const oldpictureProfil = document.querySelector("#oldpictureProfil");
+// const labelFile = document.querySelector(".label-file");
+
+profil_edit_pictureProfil.addEventListener("change", prewiewEditFile());
+
+function previewEditFile() {
+  oldpictureProfil.remove();
 }

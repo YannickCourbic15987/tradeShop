@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Profil;
 use App\Entity\User;
+use App\Form\ProfilEditType;
 use App\Form\ProfilType;
 use Doctrine\Persistence\ManagerRegistry;
 use Error;
@@ -20,7 +21,7 @@ class ProfilController extends AbstractController
 
         ManagerRegistry $doctrine,
         Security $security,
-        SluggerInterface $slugger
+        SluggerInterface $slugger,
     ) {
         $this->doctrine = $doctrine;
         $this->security = $security;
@@ -75,11 +76,26 @@ class ProfilController extends AbstractController
         // dump($request);
 
 
-
         return $this->render('profil/profil.html.twig', [
             'controller_name' => 'ProfilController',
             'form' => $form->createView(),
             'profilRepository' => $profilRepository,
+        ]);
+    }
+
+    #[Route('/profil/edit/', name: 'app_profil_edit')]
+    public function editProfil(Request $request)
+    {
+        $profil = new Profil();
+        $profilRepository = $this->doctrine->getRepository(Profil::class)->findOneBy(['id_User' => $this->security->getUser()->getId()]);
+        $form = $this->createForm(ProfilEditType::class, $profil);
+        $form->handleRequest($request);
+
+
+        return $this->render('profil/edit.html.twig', [
+            'profilRepository' => $profilRepository,
+            'form' => $form->createView(),
+
         ]);
     }
 }

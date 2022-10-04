@@ -26,11 +26,12 @@ Mes informations personnelles
  <div class="container d-flex flex-column align-items-center mt-2">
  
  <img src="{{asset("/uploads/profils/" ~ profilRepository.pictureProfil )}}" alt="" height ="200px" width="200px" class="rounded-circle border border-2 border-dark">
- 
+ <h3 class="text-dark text-uppercase">{{app.user.username}}</h3>
+ <h6>{{profilRepository.Age}} ans </h6>
   <p class="text-primary"><i class="fa-solid fa-mobile display-6"></i> <span class=" mx-2 text-black fs-5">
   0{{profilRepository.phone}} , {{ profilRepository.country }}
   </span></p>
-  
+  <p class="text-primary "><a href='{{path("app_profil_edit")}}' class="text-decoration-none"> <span class="text-capitalize"> éditer</span>  mon profil</a></p>
  </div>
  
  
