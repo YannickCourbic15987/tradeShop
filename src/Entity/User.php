@@ -62,6 +62,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(mappedBy: 'id_User', cascade: ['persist', 'remove'])]
     private ?Profil $profil = null;
 
+
+    #[ORM\Column(type: 'string', length: 100)]
+    private $resetToken;
     public function getId(): ?int
     {
         return $this->id;
@@ -177,6 +180,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->created_at = $created_at;
 
+        return $this;
+    }
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    public function setResetToken(?string $resetToken): self
+    {
+        $this->resetToken = $resetToken;
         return $this;
     }
 
