@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
+use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -65,6 +66,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 100)]
     private $resetToken;
+
+    #[ORM\Column(type: 'boolean')]
+    private $isVerified = false;
     public function getId(): ?int
     {
         return $this->id;
@@ -190,6 +194,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setResetToken(?string $resetToken): self
     {
         $this->resetToken = $resetToken;
+        return $this;
+    }
+
+    public function getIsVerified(): ?Bool
+    {
+        return $this->boolean;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
         return $this;
     }
 
