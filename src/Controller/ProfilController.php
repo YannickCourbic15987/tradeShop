@@ -2,19 +2,22 @@
 
 namespace App\Controller;
 
-use App\Entity\Profil;
-use App\Entity\User;
-use App\Form\ProfilEditType;
-use App\Form\ProfilType;
-use Doctrine\Persistence\ManagerRegistry;
 use Error;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\User;
+use App\Entity\Profil;
+use App\Form\ProfilType;
+use App\Form\ProfilEditType;
+use App\Services\UserSecurity;
+use App\Form\ProfilEditPasswordType;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class ProfilController extends AbstractController
 {
@@ -24,11 +27,15 @@ class ProfilController extends AbstractController
         Security $security,
         SluggerInterface $slugger,
         Filesystem $filesystem,
+        UserSecurity $profilRepository,
+        UserPasswordHasherInterface $hash
     ) {
         $this->doctrine = $doctrine;
         $this->security = $security;
         $this->slugger = $slugger;
         $this->filesystem = $filesystem;
+        $this->profilRepository = $profilRepository;
+        $this->hash = $hash;
     }
     #[Route('/profil/index', name: 'app_profil')]
     public function index(Request $request): Response
@@ -102,8 +109,10 @@ class ProfilController extends AbstractController
 
             $age = $request->request->get('age');
             // dd($profilEditForm->getPhone());
-
-
+            // $profilEditForm->setPictureProfil($newFilename);
+            // $profilEditForm->setAge($profilRepository->getAge());
+            // $profilEditForm->setCountry($profilRepository->getCountry());
+            // $entityManager->persist($profilEditForm);
             if (!empty($editPicture)) {
 
                 $originalFilename = pathinfo($editPicture->getClientOriginalName(), PATHINFO_FILENAME);
@@ -125,10 +134,6 @@ class ProfilController extends AbstractController
                 $profilRepository->setPhone($profilEditForm->getPhone());
             }
 
-            // $profilEditForm->setPictureProfil($newFilename);
-            // $profilEditForm->setAge($profilRepository->getAge());
-            // $profilEditForm->setCountry($profilRepository->getCountry());
-            // $entityManager->persist($profilEditForm);
 
             $entityManager->flush();
 
@@ -139,6 +144,51 @@ class ProfilController extends AbstractController
             'profilRepository' => $profilRepository,
             'form' => $form->createView(),
 
+        ]);
+    }
+
+    #[Route('profil/edit/password', name: 'app_profil_edit_passsword')]
+    public function editPassword(Request $request)
+    {
+        $entityManager = $this->doctrine->getManager();
+        // dd($this->security->getUser());
+
+        $user = new User();
+        // $userRepository = $this->doctrine->getRepository(User::class)->findOneBy(['id' => $this->security->getUser()->getId()]);
+        // dd($userRepository);
+        $picture = $this->profilRepository->ProfilSecurity()->getProfil()->getPictureProfil();
+        $username = $this->profilRepository->ProfilSecurity()->getUsername();
+        // $user = $this->profilRepository->ProfilSecurity();
+        $form = $this->createForm(ProfilEditPasswordType::class, $user);
+        $oldHashPassword = $this->doctrine->getRepository(Profil::class)->findOneBy(['id_User' => $this->security->getUser()->getId()])->getIdUser()->getPassword();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $userForm = $form->getData();
+            $oldPassword = $form->get('oldPassword')->getData();
+            $passwordConfirm = $form->get('passwordConfirm')->getData();
+            if (password_verify($oldPassword, $oldHashPassword)) {
+                if ($userForm->getPassword() === $passwordConfirm) {
+                    $hashedPassword = $this->hash->hashPassword(
+                        $user,
+                        $userForm->getPassword()
+                    );
+
+                    if ($hashedPassword) {
+                        $this->profilRepository->ProfilSecurity()->setPassword($hashedPassword);
+                        // dd($oldHashPassword, $oldPassword, $passwordConfirm, $hashedPassword,);
+                        $entityManager->flush();
+                        return $this->redirectToRoute('app_logout');
+                    }
+                }
+            }
+        }
+
+        return $this->render('profil/Editpassword.html.twig', [
+            'profilRepository' => $this->profilRepository->UserSecurity(),
+            'picture' => $picture,
+            'username' => $username,
+            'form' => $form->createView(),
         ]);
     }
 }

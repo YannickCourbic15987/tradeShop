@@ -20,7 +20,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 180, unique: true, name: 'email', type: 'string')]
     #[
-        NotBlank,
+
         Email(
             message: "l'email {{ value }} n'est pas un email valide , veuillez en choisir un autre ."
         )
@@ -45,15 +45,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-    #[NotBlank]
+
     private ?string $username = null;
 
     #[ORM\Column(length: 255)]
-    #[NotBlank]
+
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255)]
-    #[NotBlank]
+
     private ?string $firstname = null;
 
     #[ORM\Column]

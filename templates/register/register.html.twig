@@ -1,41 +1,39 @@
-
-
 {% extends 'base.html.twig' %}
 
-{% block title %}Ecommerce --Register{% endblock %}
+{% block title %}Ecommerce --Register
+{% endblock %}
 {% block content %}
-<div class="container ">
-<div class="row ">
-<h3 class="text-primary text-uppercase text-center mb-4">Inscription</h3>
-</div>
-<div class="row ">
-{{form_start(form)}}
-<div class="col-xs-12 col-md-6 mx-auto">
-{{ form_row(form.email) }}
-</div>
-<div class="col-xs-12 col-md-6 mx-auto">
-{{ form_row(form.username) }}
-</div>
-<div class="col-xs-12 col-md-6 mx-auto">
-{{ form_row(form.firstname) }}
-</div>
-<div class="col-xs-12 col-md-6 mx-auto">
-{{ form_row(form.lastname) }}
-</div>
-<div class="col-xs-12 col-md-6 mx-auto">
-{{ form_row(form.password) }}
-</div>
-<div class="col-xs-12 col-md-6 mx-auto">
-{{ form_row(form.plainPassword) }}
-</div>
-<div class="col-xs-12 col-md-6 mx-auto">
-{{ form_row(form.enregistrer) }}
-</div>
+	<div class="container ">
+		<div class="row ">
+			<h3 class="text-primary text-uppercase text-center mb-4">Inscription</h3>
+		</div>
+		<div class="row ">
+			{{form_start(form)}}
+			<div class="col-xs-12 col-md-4 mx-auto">
+				{{ form_row(form.email) }}
+			</div>
+			<div class="col-xs-12 col-md-4 mx-auto">
+				{{ form_row(form.username) }}
+			</div>
+			<div class="col-xs-12 col-md-4 mx-auto">
+				{{ form_row(form.firstname) }}
+			</div>
+			<div class="col-xs-12 col-md-4 mx-auto">
+				{{ form_row(form.lastname) }}
+			</div>
+			<div class="col-xs-12 col-md-4 mx-auto">
+				{{ form_row(form.password) }}
+			</div>
+			<div class="col-xs-12 col-md-4 mx-auto">
+				{{ form_row(form.plainPassword) }}
+			</div>
+			<div class="col-xs-12 col-md-4 mx-auto">
+				{{ form_row(form.enregistrer) }}
+			</div>
 
-{{ form_end(form) }}
-</div>
-</div>
+			{{ form_end(form) }}
+		</div>
+	</div>
 
 
 {% endblock %}
-
