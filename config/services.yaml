@@ -25,3 +25,4 @@ services:
 
 parameters:
   profils_directory: "%kernel.project_dir%/public/uploads/profils"
+  app.jwtsecret: "%env(JsonWebToken_SECRET)%"
