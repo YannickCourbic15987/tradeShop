@@ -80,9 +80,9 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    #[Route('/forgotten/password/{token}', name: 'app_forgotten_password_tokenGenerator')]
+    // #[Route('/forgotten/password/{token}', name: 'app_forgotten_password_tokenGenerator')]
 
-    public function resetPassword(): Response
-    {
-    }
+    // public function resetPassword(): Response
+    // {
+    // }
 }

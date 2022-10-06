@@ -151,7 +151,7 @@ class ProfilController extends AbstractController
     public function editPassword(Request $request)
     {
         $entityManager = $this->doctrine->getManager();
-        // dd($this->security->getUser());
+
 
         $user = new User();
         // $userRepository = $this->doctrine->getRepository(User::class)->findOneBy(['id' => $this->security->getUser()->getId()]);
