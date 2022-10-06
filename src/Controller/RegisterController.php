@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegisterType;
+use App\Repository\UserRepository;
 use App\Services\JsonWebTokenServices;
 use App\Services\MailerServices;
 use DateTimeImmutable;
@@ -73,8 +74,6 @@ class RegisterController extends AbstractController
                     'Activation de votre compte sur le site e-commerce',
                     'register',
                     ['user' => $userForm, 'token' => $token]
-
-
                 );
 
                 $this->addFlash(
@@ -91,5 +90,38 @@ class RegisterController extends AbstractController
             'controller_name' => 'RegisterController',
             'form' => $form->createView(),
         ]);
+    }
+
+    #[Route('/verify/{token}', name: 'app_verify_token')]
+    public function verifyToken($token, UserRepository $userRepository): Response
+    {
+        $entityManager = $this->doctrine->getManager();
+        //on vérifie si le token est valide , n'a pas expiré et n'a pas été modifier 
+        if (
+            $this->jsonToken->tokenIsValid($token) &&
+            $this->jsonToken->isExpired($token) === false &&
+            $this->jsonToken->checkToken($token, $this->getParameter('app.jwtsecret'))
+        ) {
+            // dd($token, $this->jsonToken->checkToken($token, $this->getParameter('app.jwtsecret')), $this->jsonToken->isExpired($token));
+
+            // dd($token, $this->jsonToken->tokenIsValid($token), $this->jsonToken->getPayload($token), $this->jsonToken->isExpired($token),         $this->jsonToken->checkToken($token, $this->getParameter('app.jwtsecret')));
+            //on récupère le payload
+
+            $payload = $this->jsonToken->getPayload($token);
+            //on récup le user du token 
+            $user = $userRepository->findOneBy(['id' => $payload['user_id']]);
+            //on vérifie que l'utilisateur exste et n'as pas encore activé le compte
+            if ($user && !$user->getIsVerified()) {
+                $user->setIsVerified(true);
+                $entityManager->flush();
+
+                $this->addFlash('success', 'le compte a été activé !');
+                return $this->redirectToRoute('app_home');
+            }
+        }
+
+        //ici un prbl se pose dans le token , soit il est corrompu ou soit il a expiré
+        $this->addFlash('danger', 'le lien est invalide ou a expiré');
+        return $this->redirectToRoute('app_login');
     }
 }
