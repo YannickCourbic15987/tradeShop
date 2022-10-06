@@ -111,15 +111,18 @@ class RegisterController extends AbstractController
             //on récup le user du token 
             $user = $userRepository->findOneBy(['id' => $payload['user_id']]);
             //on vérifie que l'utilisateur exste et n'as pas encore activé le compte
-            if ($user && !$user->getIsVerified()) {
+            if ($user && $user->getIsVerified() === 0) {
                 $user->setIsVerified(true);
                 $entityManager->flush();
 
                 $this->addFlash('success', 'le compte a été activé !');
+                return $this->redirectToRoute('app_profil');
+            } elseif ($user && $user->getIsVerified()) {
+
+                $this->addFlash('danger', 'le lien est invalide  car il a déjà été utiliser');
                 return $this->redirectToRoute('app_home');
             }
         }
-
         //ici un prbl se pose dans le token , soit il est corrompu ou soit il a expiré
         $this->addFlash('danger', 'le lien est invalide ou a expiré');
         return $this->redirectToRoute('app_login');
