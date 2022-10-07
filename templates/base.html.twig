@@ -38,6 +38,9 @@
 										<img src="{{asset("/uploads/profils/" ~ profilRepository.pictureProfil )}}" alt="" height="30px" width="30px" class="rounded-circle">
 										<a class="nav-link active" href="{{path('app_profil')}}">{{app.user.username}}</a>
 									</li>
+									<li class="nav-item d-flex align-items-center gap-1">
+										<a href="{{ path('app_logout') }}" class="nav-link active">me déconnecter</a>
+									</li>
 								{% elseif profilRepository is  null %}
 
 									<li class="nav-item">

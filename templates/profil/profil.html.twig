@@ -6,12 +6,12 @@
 {% block content %}
 
 	{# {% for message in app.flashes('success') %}
-				    <div class="flash-success">
-				        <div class="alert alert-success" role="alert">
-				          {{message}}
-				        </div>
-				    </div>   
-				{% endfor %} #}
+								    <div class="flash-success">
+								        <div class="alert alert-success" role="alert">
+								          {{message}}
+								        </div>
+								    </div>   
+								{% endfor %} #}
 	<h1 class="text-center text-secondary text-uppercase mt-3 mb-5 ">
 		Mes informations personnelles
 	</h1>
@@ -55,7 +55,7 @@
 					<main
 						id="main">
 						{# <label for="file_upload_input" class="label-file">Choisir son image de profil</label>
-																								<input type="file" name="file_upload_input"  class="input-file" accept="image/jpeg ,image/png ,image/gif" id="file_upload_input"> #}
+																																																<input type="file" name="file_upload_input"  class="input-file" accept="image/jpeg ,image/png ,image/gif" id="file_upload_input"> #}
 						{{ form_row(form.pictureProfil) }}
 					</main>
 					<label for="age" class="form-label mt-2 mb-2">Mon âge</label>
@@ -67,38 +67,40 @@
 						{% endfor %}
 					</select>
 					{# <label for="phone" class="form-label mt-3" require>Numéro de téléphone : </label>
-																				<input type="tel" name="phone" id="phone" class="form-control">
-																				<button type="submit" class="btn btn-outline-success mt-3">valider</button> #}
+																																								<input type="tel" name="phone" id="phone" class="form-control">
+																																								<button type="submit" class="btn btn-outline-success mt-3">valider</button> #}
 
 					{{ form_end(form) }}
 
 				{% endif %}
 			</div>
-			<div class="col-xs-12 col-md-6 d-flex flex-column align-items-right gap-2">
-				<h3 class="text-dark text-center text-uppercase mt-2">
-					mes infos de connexion
-				</h3>
-				<h4 class="text-secondary text-right text-capitalize fs-5" id="champEmail">
-					mon email:
-					<span class="text-dark mx-2 text-lowercase fs-6">{{app.user.email}}</span>
-				</h4>
-				<h4 class="text-secondary text-right text-capitalize fs-5">
-					pseudo :
-					<span class="text-dark mx-2 text-lowercase fs-6">{{app.user.username}}</span>
-				</h4>
-				<h4 class="text-secondary text-right text-capitalize fs-5">
-					prénom :
-					<span class="text-dark mx-2 text-lowercase fs-6">{{app.user.firstname}}</span>
-				</h4>
-				<h4 class="text-secondary text-right text-capitalize fs-5">
-					nom de famille :
-					<span class="text-dark mx-2 text-lowercase fs-6">{{app.user.lastname}}</span>
-				</h4>
-				<a href="{{path("app_profil_edit_passsword")}}" class="text-info text-decoration-none ">Editer mon mot de passe</a>
-				<a href="#" class="text-info text-decoration-none">Editer mon email</a>
-				<a href="#" class="text-info text-decoration-none">Editer mes infos personnelles</a>
-				<button class="btn btn-outline-info">Ajouter une adresse</button>
-			</div>
+			{% if app.user.isVerified == true %}
+				<div class="col-xs-12 col-md-6 d-flex flex-column align-items-right gap-2">
+					<h3 class="text-dark text-center text-uppercase mt-2">
+						mes infos de connexion
+					</h3>
+					<h4 class="text-secondary text-right text-capitalize fs-5" id="champEmail">
+						mon email:
+						<span class="text-dark mx-2 text-lowercase fs-6">{{app.user.email}}</span>
+					</h4>
+					<h4 class="text-secondary text-right text-capitalize fs-5">
+						pseudo :
+						<span class="text-dark mx-2 text-lowercase fs-6">{{app.user.username}}</span>
+					</h4>
+					<h4 class="text-secondary text-right text-capitalize fs-5">
+						prénom :
+						<span class="text-dark mx-2 text-lowercase fs-6">{{app.user.firstname}}</span>
+					</h4>
+					<h4 class="text-secondary text-right text-capitalize fs-5">
+						nom de famille :
+						<span class="text-dark mx-2 text-lowercase fs-6">{{app.user.lastname}}</span>
+					</h4>
+					<a href="{{path("app_profil_edit_passsword")}}" class="text-info text-decoration-none ">Editer mon mot de passe</a>
+					<a href="#" class="text-info text-decoration-none">Editer mon email</a>
+					<a href="#" class="text-info text-decoration-none">Editer mes infos personnelles</a>
+					<button class="btn btn-outline-info">Ajouter une adresse</button>
+				</div>
+			{% endif %}
 		</div>
 	</div>
 

@@ -49,7 +49,7 @@ class ProfilController extends AbstractController
         //pour récupérer les information d'un formulaire classique 
         $form = $this->createForm(ProfilType::class, $profil);
         $form->handleRequest($request);
-        $id_user = $this->security->getUser()->getId();
+        // $id_user = $this->security->getUser()->getId();
         $profilRepository = $this->doctrine->getRepository(Profil::class)->findOneBy(['id_User' => $this->security->getUser()->getId()]);
         $entityManager = $this->doctrine->getManager();
         // if($request->request->get('phone'))
