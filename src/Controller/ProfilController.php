@@ -5,6 +5,7 @@ namespace App\Controller;
 use Error;
 use App\Entity\User;
 use App\Entity\Profil;
+use App\Form\ProfilEditEmailType;
 use App\Form\ProfilType;
 use App\Form\ProfilEditType;
 use App\Services\UserSecurity;
@@ -189,6 +190,23 @@ class ProfilController extends AbstractController
             'picture' => $picture,
             'username' => $username,
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('profil/edit/email', name: 'app_profil_edit_email')]
+
+    public function editEmail(Request $request)
+    {
+        $user = new User;
+        $entityManager = $this->doctrine->getManager();
+        $form = $this->createForm(ProfilEditEmailType::class, $user);
+        $form->handleRequest($request);
+
+
+
+
+        return $this->render('profil/Editemail.html.twig', [
+            'profilRepository' => $this->profilRepository->UserSecurity(),
         ]);
     }
 }
