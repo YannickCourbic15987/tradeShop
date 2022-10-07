@@ -95,14 +95,14 @@ class RegisterController extends AbstractController
     #[Route('/verify/{token}', name: 'app_verify_token')]
     public function verifyToken($token, UserRepository $userRepository): Response
     {
+
         $entityManager = $this->doctrine->getManager();
         //on vérifie si le token est valide , n'a pas expiré et n'a pas été modifier 
         if (
             $this->jsonToken->tokenIsValid($token) &&
-            $this->jsonToken->isExpired($token) === false &&
+            !$this->jsonToken->isExpired($token) &&
             $this->jsonToken->checkToken($token, $this->getParameter('app.jwtsecret'))
         ) {
-            // dd($token, $this->jsonToken->checkToken($token, $this->getParameter('app.jwtsecret')), $this->jsonToken->isExpired($token));
 
             // dd($token, $this->jsonToken->tokenIsValid($token), $this->jsonToken->getPayload($token), $this->jsonToken->isExpired($token),         $this->jsonToken->checkToken($token, $this->getParameter('app.jwtsecret')));
             //on récupère le payload
@@ -111,7 +111,8 @@ class RegisterController extends AbstractController
             //on récup le user du token 
             $user = $userRepository->findOneBy(['id' => $payload['user_id']]);
             //on vérifie que l'utilisateur exste et n'as pas encore activé le compte
-            if ($user && $user->getIsVerified() === 0) {
+            if ($user && $user->getIsVerified() === false) {
+                // dd($token, $this->jsonToken->checkToken($token, $this->getParameter('app.jwtsecret')), $this->jsonToken->isExpired($token));
                 $user->setIsVerified(true);
                 $entityManager->flush();
 

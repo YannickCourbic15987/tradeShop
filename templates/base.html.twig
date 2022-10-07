@@ -79,12 +79,14 @@
 					</div>
 				</div>
 			</nav>
-			{% if app.user and app.user.isVerified is null %}
+			{% if app.user and app.user.isVerified == false %}
+
+
 				<div class="alert alert-warning alert-dismissible" role="alert">
 					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 					<div class="alert-message">
 						<strong>Votre compte n'est pas activé</strong>
-						renvoyer le lein d'activation
+						veullez consultez votre boîte email et cliquez sur le lien d'activation
 					</div>
 				</div>
 
