@@ -10,6 +10,7 @@ use App\Form\ProfilType;
 use App\Form\ProfilEditType;
 use App\Services\UserSecurity;
 use App\Form\ProfilEditPasswordType;
+use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
@@ -195,7 +196,7 @@ class ProfilController extends AbstractController
 
     #[Route('profil/edit/email', name: 'app_profil_edit_email')]
 
-    public function editEmail(Request $request)
+    public function editEmail(Request $request, UserRepository $userRepository)
     {
         $user = new User;
         $picture = $this->profilRepository->ProfilSecurity()->getProfil()->getPictureProfil();
@@ -204,6 +205,19 @@ class ProfilController extends AbstractController
         $form = $this->createForm(ProfilEditEmailType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $userForm = $form->getData();
+            $oldEmail = $form->get('oldEmail')->getData();
+            $emailConfirm = $form->get('emailConfirm')->getData();
+            $user = $userRepository->findOneBy(['email' => $oldEmail]);
+
+            if ($user) {
+                if ($emailConfirm === $userForm->getEmail()) {
+                    $user->setEmail($userForm->getEmail());
+                    $entityManager->flush();
+                    $this->addFlash('success', 'l\'émail a été modifiée avec succès');
+                    return $this->redirectToRoute('app_profil');
+                }
+            }
         }
 
 
