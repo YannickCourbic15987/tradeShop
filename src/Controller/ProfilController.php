@@ -198,15 +198,21 @@ class ProfilController extends AbstractController
     public function editEmail(Request $request)
     {
         $user = new User;
+        $picture = $this->profilRepository->ProfilSecurity()->getProfil()->getPictureProfil();
+        $username = $this->profilRepository->ProfilSecurity()->getUsername();
         $entityManager = $this->doctrine->getManager();
         $form = $this->createForm(ProfilEditEmailType::class, $user);
         $form->handleRequest($request);
-
+        if ($form->isSubmitted() && $form->isValid()) {
+        }
 
 
 
         return $this->render('profil/Editemail.html.twig', [
             'profilRepository' => $this->profilRepository->UserSecurity(),
+            'form' => $form->createView(),
+            'picture' => $picture,
+            'username' => $username,
         ]);
     }
 }
