@@ -29,7 +29,8 @@ class ProfilEditEmailType extends AbstractType
                 'label' => "votre nouveau email : ",
                 "label_attr" => [
                     'class' => 'mb-1'
-                ]
+                ],
+                "required" => true
             ])
             ->add('emailConfirm', EmailType::class, [
                 'mapped' => false,

@@ -9,6 +9,7 @@ use App\Repository\UserRepository;
 use App\Form\PasswordResetChangeType;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Form\ResetPasswordRequestFormType;
+use App\Services\UserSecurity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,12 +30,14 @@ class SecurityController extends AbstractController
         MailerServices $mailer,
         UserPasswordHasherInterface $hash,
         Security $security,
+        UserSecurity $profilRepository,
     ) {
         $this->doctrine = $doctrine;
         $this->token = $token;
         $this->mailer = $mailer;
         $this->hash = $hash;
         $this->security = $security;
+        $this->profilRepository = $profilRepository;
     }
 
 
@@ -104,6 +107,8 @@ class SecurityController extends AbstractController
             $this->addFlash('danger', 'un problème est survenue');
             return $this->redirectToRoute('app_login');
         }
+
+
         return $this->render('security/reset_password_request.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -117,38 +122,35 @@ class SecurityController extends AbstractController
         $entityManager = $this->doctrine->getManager();
 
         $user = $userRepository->findOneBy(['resetToken' => $token]);
-
+        $users = new User();
         if ($user) {
-            $userEntity = new user;
-            $form = $this->createForm(PasswordResetChangeType::class, $userEntity);
+            $form = $this->createForm(PasswordResetChangeType::class, $users);
             $form->handleRequest($request);
-
             if ($form->isSubmitted() && $form->isValid()) {
-                $userform = $form->getData();
-                $newPasswordConfirm = $form->get('newPasswordConfirm')->getData();
+                // on efface le token 
+                $user->setResetToken('');
 
-                if ($userform->getPassword() === $newPasswordConfirm) {
-
-                    $hashedPassword = $this->hash->hashPassword(
-                        $userEntity,
-                        $userform->getPassword()
+                if ($form->get('newPasswordConfirm')->getData() === $form->getData()->getPassword()) {
+                    $user->setPassword(
+                        $this->hash->hashPassword(
+                            $users,
+                            $form->getData()->getPassword()
+                        )
                     );
+                    $entityManager->persist($user);
+                    $entityManager->flush();
 
-                    // dd($token, $hashedPassword);
-
-                    if ($hashedPassword) {
-                        $user->setPassword($hashedPassword);
-                        $entityManager->flush();
-                        $this->addFlash('success', 'mot de passe modifié avec succès ');
-                        return $this->redirectToRoute('app_login');
-                    }
+                    $this->addFlash('success', 'Mot de passe modifé avec succès');
+                    return $this->redirectToRoute("app_login");
                 }
             }
 
-
             return $this->render('security/reset_password_change.html.twig', [
                 'form' => $form->createView(),
+                'profilRepository' => $this->profilRepository->UserSecurity(),
             ]);
         }
+        $this->addFlash('danger', 'jeton invalide');
+        return $this->redirectToRoute("app_login");
     }
 }

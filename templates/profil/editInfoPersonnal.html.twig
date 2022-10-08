@@ -1,0 +1,37 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	edition email
+{% endblock %}
+
+{% block content %}
+	<div class="row-12 mt-5 py-5">
+		<div class="container d-flex flex-column align-items-center ">
+
+			<div class="col-xs-12 col-md-6">
+
+				<div class="card shadow-lg">
+
+					<div class="card-header"></div>
+					<div class="container d-flex flex-row justify-content-start align-items-center">
+						<img src="{{asset("/uploads/profils/" ~ picture)}}" height="45px" width="45px" class="rounded-circle mx-2">
+						<h5 class="text-secondary">
+							{{username}}
+						</h5>
+					</div>
+					<div class="card-body">
+						<h3 class="text-warning text-center card-title">
+							<span class="text-capitalize">édition</span>
+							de vos infos personnel
+						</h3>
+
+						{{form(form)}}
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	{% endblock %}

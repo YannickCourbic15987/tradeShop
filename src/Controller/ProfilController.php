@@ -6,6 +6,7 @@ use Error;
 use App\Entity\User;
 use App\Entity\Profil;
 use App\Form\ProfilEditEmailType;
+use App\Form\ProfilEditInfoType;
 use App\Form\ProfilType;
 use App\Form\ProfilEditType;
 use App\Services\UserSecurity;
@@ -219,10 +220,42 @@ class ProfilController extends AbstractController
                 }
             }
         }
-
-
-
         return $this->render('profil/Editemail.html.twig', [
+            'profilRepository' => $this->profilRepository->UserSecurity(),
+            'form' => $form->createView(),
+            'picture' => $picture,
+            'username' => $username,
+        ]);
+    }
+    #[Route('profil/edit/info', name: 'app_profil_edit_info')]
+    public function editInfoPersonal(Request $request, UserRepository $userRepository)
+    {
+        $user = new User();
+        $picture = $this->profilRepository->ProfilSecurity()->getProfil()->getPictureProfil();
+        $username = $this->profilRepository->ProfilSecurity()->getUsername();
+        $entityManager = $this->doctrine->getManager();
+        $form = $this->createForm(ProfilEditInfoType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $userForm = $form->getData();
+            $users = $userRepository->findOneBy(['id' => $this->security->getUser()->getId()]);
+            if (!empty($userForm->getUsername())) {
+
+                $users->setUsername($userForm->getUsername());
+            } elseif (!empty($userForm->getFirstname())) {
+
+                $users->setFirstname($userForm->getFirstname());
+            } elseif (!empty($userForm->getLastname())) {
+
+                $users->setLastname($userForm->getLastname());
+            }
+
+            $entityManager->flush();
+            $this->addFlash('success', 'vos infos personnelles ont été modifiée avec succès ');
+            return $this->redirectToRoute('app_profil');
+        }
+
+        return $this->render('profil/editInfoPersonnal.html.twig', [
             'profilRepository' => $this->profilRepository->UserSecurity(),
             'form' => $form->createView(),
             'picture' => $picture,

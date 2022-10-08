@@ -23,7 +23,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 180, unique: true, name: 'email', type: 'string')]
     #[
-
         Email(
             message: "l'email {{ value }} n'est pas un email valide , veuillez en choisir un autre ."
         )
@@ -38,7 +37,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     #[
-        NotBlank,
         Regex(
             pattern: '/^(?=.*\d)(?=.*[a-zA-Z])(?=.*[A-Z])(?=.*[-\#\$\.\%\&\*])(?=.*[a-zA-Z]).{8,}$/',
             match: false,
