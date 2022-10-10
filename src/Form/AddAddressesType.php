@@ -45,11 +45,11 @@ class AddAddressesType extends AbstractType
             ])
             ->add('PostalCode', NumberType::class, [
                 'attr' => [
-                    'class' => 'form-control d-none'
+                    'class' => 'form-control'
                 ],
                 'label' => 'Code Postal :',
                 'label_attr' => [
-                    'class' => 'form-label d-none'
+                    'class' => 'form-label '
                 ]
             ])
             ->add('city', TextType::class, [
