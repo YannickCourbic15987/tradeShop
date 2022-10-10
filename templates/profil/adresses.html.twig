@@ -1,0 +1,27 @@
+{% extends "base.html.twig" %}
+{% block title %}
+	ajout d'une adresse
+{% endblock %}
+
+{% block content %}
+	<h1 class="text-center text-primary text-uppercase">ajouter mes adresses
+	</h1>
+	<div class="container">
+		{{form_start(form)}}
+		{{form_row(form.adresse)}}
+		{{form_row(form.number_of_street)}}
+		{{form_row(form.name_of_street)}}
+		{{form_row(form.typeOfWay)}}
+		<label for="codePostal" class="form-label">Code Postal :
+		</label>
+		<input type="text" name="codePostal" id="codePostal" class="form-control">
+		{{form_row(form.city)}}
+		{{form_row(form.Department)}}
+		{{form_row(form.Region)}}
+
+
+		{{form_end(form)}}
+
+	</div>
+
+{% endblock %}

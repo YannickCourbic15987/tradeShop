@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Addresses;
 use Error;
 use App\Entity\User;
 use App\Entity\Profil;
+use App\Form\AddAddressesType;
 use App\Form\ProfilEditEmailType;
 use App\Form\ProfilEditInfoType;
 use App\Form\ProfilType;
@@ -97,7 +99,7 @@ class ProfilController extends AbstractController
     }
 
     #[Route('/profil/edit/', name: 'app_profil_edit')]
-    public function editProfil(Request $request)
+    public function editProfil(Request $request): Response
     {
         $profil = new Profil();
         $entityManager = $this->doctrine->getManager();
@@ -151,7 +153,7 @@ class ProfilController extends AbstractController
     }
 
     #[Route('profil/edit/password', name: 'app_profil_edit_passsword')]
-    public function editPassword(Request $request)
+    public function editPassword(Request $request): Response
     {
         $entityManager = $this->doctrine->getManager();
 
@@ -197,7 +199,7 @@ class ProfilController extends AbstractController
 
     #[Route('profil/edit/email', name: 'app_profil_edit_email')]
 
-    public function editEmail(Request $request, UserRepository $userRepository)
+    public function editEmail(Request $request, UserRepository $userRepository): Response
     {
         $user = new User;
         $picture = $this->profilRepository->ProfilSecurity()->getProfil()->getPictureProfil();
@@ -228,7 +230,7 @@ class ProfilController extends AbstractController
         ]);
     }
     #[Route('profil/edit/info', name: 'app_profil_edit_info')]
-    public function editInfoPersonal(Request $request, UserRepository $userRepository)
+    public function editInfoPersonal(Request $request, UserRepository $userRepository): Response
     {
         $user = new User();
         $picture = $this->profilRepository->ProfilSecurity()->getProfil()->getPictureProfil();
@@ -260,6 +262,19 @@ class ProfilController extends AbstractController
             'form' => $form->createView(),
             'picture' => $picture,
             'username' => $username,
+        ]);
+    }
+
+    #[Route('profil/add/addresse', name: 'app_profil_add_addresses')]
+    public function addAdresses(): Response
+    {
+        $adresse = new Addresses();
+        $form = $this->createForm(AddAddressesType::class, $adresse);
+        // $form->handleRequest($request);
+
+        return  $this->render('profil/adresses.html.twig', [
+            'form' => $form->createView(),
+            'profilRepository' => $this->profilRepository->UserSecurity(),
         ]);
     }
 }

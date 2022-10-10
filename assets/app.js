@@ -11,5 +11,6 @@ import "./styles/app.scss";
 // start the Stimulus application
 import "./bootstrap";
 import "../node_modules/bootstrap/dist/js/bootstrap.bundle";
+import "../assets/js/geoApi";
 import "../assets/js/previewPicture";
 import "../assets/js/previewEditPicture";
