@@ -147,7 +147,7 @@ class SecurityController extends AbstractController
 
             return $this->render('security/reset_password_change.html.twig', [
                 'form' => $form->createView(),
-                'profilRepository' => $this->profilRepository->UserSecurity(),
+
             ]);
         }
         $this->addFlash('danger', 'jeton invalide');

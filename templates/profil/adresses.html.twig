@@ -8,14 +8,35 @@
 	</h1>
 	<div class="container">
 		{{form_start(form)}}
+	
+		<div class="form-outline">
 		{{form_row(form.adresse)}}
+		<div class="card card-body mb-1 d-none" id="suggest">
+		</div>
+		</div>
 		{{form_row(form.number_of_street)}}
 		{{form_row(form.name_of_street)}}
 		{{form_row(form.typeOfWay)}}
 		{{form_row(form.PostalCode)}}
 		{{form_row(form.city)}}
-		{{form_row(form.Department)}}
-		{{form_row(form.Region)}}
+		{# {{form_row(form.Department)}} #}
+
+		<div>
+		<label for="departments" class='form-label'>Dépatements :</label> 
+
+		<select name="departement" id="department" class="form-select">
+		<option selected > Liste de départements</option>
+		
+		</select>
+		</div>
+		{# {{form_row(form.Region)}} #}
+
+		<div>
+		<label for="region" class ='form-label'>Région : </label>
+		 <select name="region" id="region" class="form-select">
+		 <option selected >Liste des Région :</option>		 
+		 </select>
+		</div>
 		{# {{ encore_entry_script_tags('geoApi') }} #}
 		{{form_end(form)}}
 	</div>

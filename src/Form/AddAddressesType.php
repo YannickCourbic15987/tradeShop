@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class AddAddressesType extends AbstractType
@@ -18,7 +19,7 @@ class AddAddressesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('adresse', TextType::class, [
+            ->add('adresse', SearchType::class, [
                 'attr' => [
                     'class' => 'form-control'
                 ],
@@ -60,15 +61,21 @@ class AddAddressesType extends AbstractType
             ])
             ->add('Department', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control d-none'
                 ],
                 'label' => 'Département :',
+                'label_attr' => [
+                    'class' => 'd-none'
+                ]
             ])
             ->add('Region', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control d-none'
                 ],
                 'label' => 'Région :',
+                'label_attr' => [
+                    'class' => 'd-none'
+                ]
             ])
             ->add('user', EntityType::class, [
                 'class' => User::class,
