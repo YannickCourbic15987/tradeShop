@@ -102,6 +102,7 @@ function searchCity(){
     console.log(e.target.value);
     
     let address = e.target.value;
+    
     if(address){
       
       fetchAddress(address)
@@ -110,14 +111,14 @@ function searchCity(){
   }
   
   async function fetchAddress(address){
-    const suggest = document.querySelector('#suggest');
+  const suggest = document.querySelector('#suggest');
   let linkAddress = address.split(' ');
   let JoinAdress =  linkAddress.join("%20");
 
   console.log(JoinAdress);
-  const apiUrlCity = `https://api-adresse.data.gouv.fr/search/?q=${JoinAdress}&type=housenumber&autocomplete=1&limit=11`;
-if(JoinAdress.length > 3){
+  const apiUrlCity = `https://api-adresse.data.gouv.fr/search/?q=${JoinAdress}&type=housenumber&autocomplete=1&limit=5`;
 
+  if(JoinAdress.length > 3){
   const request = await fetch(
     apiUrlCity ,
     {method: 'GET'}
@@ -127,29 +128,24 @@ if(JoinAdress.length > 3){
     alert('Un problème est survenu ')
   }
   else{
+    suggest.textContent = "";
     const data = await request.json();
-
-    
-    if(data.features  ){
+    if(data.features ){
       console.log(data.features);
-      suggest.classList.remove('d-none')
+      suggest.classList.remove('hidden')
 
-        let labelAddress = [];
-       for (let i = 0; i < data.features.length; i++) {
-     labelAddress.push(data.features[i].properties.label);
+      let labelAddress = [];
+    for (let i = 0; i < data.features.length; i++) {
+    labelAddress.push(data.features[i].properties.label);
         
-       }
-       console.log(labelAddress);
-       for (let i = 0; i < labelAddress.length; i++) {
-        const label = document.createElement('p');
-        suggest.appendChild(label);
-     
-           label.innerHTML = labelAddress[i];
-         
-
+    }
+    console.log(labelAddress);
+    for (let i = 0; i < labelAddress.length; i++) {
+    const label = document.createElement('p');
+    suggest.appendChild(label);  
+    label.innerHTML = labelAddress[i];
     console.log(labelAddress[i] , labelAddress.length);
-        
-       }
+}
     }
     else{
       console.log('rien trouver');
@@ -157,8 +153,12 @@ if(JoinAdress.length > 3){
     }
 
   }
-} else{
-   console.log('ne trouve rien');
+}
+else if(JoinAdress.length === 1 ){
+  suggest.classList.add('hidden');
+}
+else{
+  console.log('ne trouve rien');
 }
 
 }

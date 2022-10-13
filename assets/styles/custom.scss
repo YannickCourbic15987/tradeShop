@@ -39,3 +39,10 @@
     }
   }
 }
+.container {
+  .form-outline {
+    .card.card-body.mb-1.hidden {
+      display: none;
+    }
+  }
+}
