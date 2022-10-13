@@ -28,15 +28,17 @@ class AddAddressesType extends AbstractType
             ])
             ->add('number_of_street', NumberType::class, [
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control z'
                 ],
                 'label' => 'N° de Rue :',
+
             ])
             ->add('name_of_street', TextType::class, [
                 'attr' => [
                     'class' => 'form-control'
                 ],
                 'label' => 'Nom de la rue :',
+
             ])
             ->add('typeOfWay', TextType::class, [
                 'attr' => [
@@ -60,6 +62,7 @@ class AddAddressesType extends AbstractType
                 'label' => 'Ville :',
             ])
             ->add('Department', TextType::class, [
+
                 'attr' => [
                     'class' => 'form-control d-none'
                 ],
@@ -69,13 +72,15 @@ class AddAddressesType extends AbstractType
                 ]
             ])
             ->add('Region', TextType::class, [
+
                 'attr' => [
                     'class' => 'form-control d-none'
                 ],
                 'label' => 'Région :',
                 'label_attr' => [
                     'class' => 'd-none'
-                ]
+                ],
+
             ])
             ->add('user', EntityType::class, [
                 'class' => User::class,
@@ -100,7 +105,7 @@ class AddAddressesType extends AbstractType
             ])
             ->add('Enregistrer', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-outline-success mt-3'
+                    'class' => 'btn btn-outline-success mt-3 '
                 ]
             ]);
     }

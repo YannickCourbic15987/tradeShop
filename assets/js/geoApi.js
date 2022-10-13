@@ -6,6 +6,7 @@ const selectRegion = document.querySelector('#region');
 const inputCity = document.querySelector('#add_addresses_PostalCode');
 const inputCitys = document.querySelector('#add_addresses_city');
 const inputAddress = document.querySelector('#add_addresses_adresse');
+
 console.log(apiUrl);
 //créer une requête
 let request = new XMLHttpRequest();
@@ -131,7 +132,7 @@ function searchCity(){
     suggest.textContent = "";
     const data = await request.json();
     if(data.features ){
-      console.log(data.features);
+      console.log(data);
       suggest.classList.remove('hidden')
 
       let labelAddress = [];
@@ -141,17 +142,44 @@ function searchCity(){
     }
     console.log(labelAddress);
     for (let i = 0; i < labelAddress.length; i++) {
+    // suggest.style.zIndex = "1";
     const label = document.createElement('p');
+    label.className = "suggestTxt";
     suggest.appendChild(label);  
-    label.innerHTML = labelAddress[i];
+    // label.innerHTML ="<button class='btnSuggest'>" + labelAddress[i] + "</button>";
     console.log(labelAddress[i] , labelAddress.length);
+    const btnSuggest = document.createElement('button');
+    label.appendChild(btnSuggest);
+    btnSuggest.innerHTML = labelAddress[i];
+    btnSuggest.style.border = 'none';
+    btnSuggest.style.background ='none';
+    // btnSuggest.style.zIndex = '1000';
+    
+    btnSuggest.addEventListener('mouseenter' , () => {
+      // console.log('mouse enter');
+      label.style.backgroundColor = '#dcdcdc';
+    })
+
+    btnSuggest.addEventListener('mouseleave' , () => {
+    // console.log('mouse leave');
+    label.style.backgroundColor = 'white';
+    })
+
+    btnSuggest.addEventListener('click' , (e) => {
+      console.log(e.target);
+      inputAddress.value = e.target.firstChild.data;
+      console.log(e.target.firstChild.data);
+      suggest.classList.add('hidden');
+      let tabAddress = e.target.firstChild.data.split(' ');
+      console.log(tabAddress);
+
+    })
 }
     }
     else{
       console.log('rien trouver');
   
     }
-
   }
 }
 else if(JoinAdress.length === 1 ){
@@ -160,10 +188,21 @@ else if(JoinAdress.length === 1 ){
 else{
   console.log('ne trouve rien');
 }
-
 }
 
 }
+const inputDepartment = document.querySelector('#add_addresses_Department');
+const inputRegion = document.querySelector('#add_addresses_Region');
+select.addEventListener('change' , () => {
+  // console.log(select.options[select.selectedIndex].text);
+  inputDepartment.value = select.options[select.selectedIndex].text;
+
+})
+
+selectRegion.addEventListener('change' , () => {
+  // console.log(selectRegion.options[selectRegion.selectedIndex].text);
+  inputRegion.value = selectRegion.options[selectRegion.selectedIndex].text;
+})
 
 
 searchCity();

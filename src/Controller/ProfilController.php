@@ -266,11 +266,19 @@ class ProfilController extends AbstractController
     }
 
     #[Route('profil/add/addresse', name: 'app_profil_add_addresses')]
-    public function addAdresses(): Response
+    public function addAdresses(Request $request)
     {
         $adresse = new Addresses();
         $form = $this->createForm(AddAddressesType::class, $adresse);
-        // $form->handleRequest($request);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $userform = $form->getData();
+            dd($userform);
+        }
+        // dump($request->request);
+        // if ($request->request->count() > 0) {
+
+        // }
 
         return  $this->render('profil/adresses.html.twig', [
             'form' => $form->createView(),
