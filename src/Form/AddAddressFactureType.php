@@ -11,10 +11,8 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\SearchType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class AddAddressesType extends AbstractType
+class AddAddressFactureType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -99,26 +97,17 @@ class AddAddressesType extends AbstractType
                     'class' => 'd-none'
                 ],
                 'attr' => [
-                    'class' => 'd-none'
+                    'class' => 'd-none',
+                    'value' => 1
                 ]
 
-            ])
-            // ->add('Enregistrer', SubmitType::class, [
-            //     'attr' => [
-            //         'class' => 'btn btn-outline-success mt-3 '
-            //     ]
-            // ])
-
-
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Addresses::class,
-            // 'data_class' => User::class,
-
         ]);
     }
 }

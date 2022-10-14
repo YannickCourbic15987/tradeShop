@@ -6,38 +6,50 @@
 {% block content %}
 	<h1 class="text-center text-primary text-uppercase">ajouter mes adresses
 	</h1>
+
 	<div class="container">
 		{{form_start(form)}}
-	
-		<div class="form-outline">
-		{{form_row(form.adresse)}}
-		<div class="card card-body mb-1 hidden" id="suggest">
-		</div>
-		</div>
-		{{form_row(form.number_of_street)}}
-		{{form_row(form.name_of_street)}}
-		{{form_row(form.typeOfWay)}}
-		{{form_row(form.PostalCode)}}
-		{{form_row(form.city)}}
-		{# {{form_row(form.Department)}} #}
+		<div class="row">
+			<div class="col-xs-12 col-md-5 mx-auto">
+				<h4 class="text-center text-uppercase">Adresse de livraison</h4>
 
-		<div>
-		<label for="departments" class='form-label'>Dépatements :</label> 
+				<div class="form-outline">
+					{{form_row(form.adresse)}}
+					<div class="card card-body mb-1 hidden" id="suggest"></div>
+				</div>
+				{{form_row(form.number_of_street)}}
+				{{form_row(form.name_of_street)}}
+				{{form_row(form.typeOfWay)}}
+				{{form_row(form.PostalCode)}}
+				{{form_row(form.city)}}
+				{# {{form_row(form.Department)}} #}
 
-		<select name="departement" id="department" class="form-select">
-		<option selected > Liste de départements</option>
-		
-		</select>
-		</div>
-		{{form_row(form.Region)}}
+				<div>
+					<label for="departments" class='form-label'>Dépatements :</label>
 
-		<div>
-		<label for="region" class ='form-label'>Région : </label>
-		 <select name="region" id="region" class="form-select">
-		 <option selected >Liste des Région :</option>		 
-		 </select>
+					<select name="departement" id="department" class="form-select">
+						<option selected>
+							Liste de départements</option>
+
+					</select>
+				</div>
+				{{form_row(form.Region)}}
+
+				<div>
+					<label for="region" class='form-label'>Région :
+					</label>
+					<select name="region" id="region" class="form-select">
+						<option selected>Liste des Région :</option>
+					</select>
+				</div>
+			</div>
+			<button type="submit" class="btn btn-outline-success mt-2 float-end">
+				ajouter</button>
+			{{form_end(form)}}
+
+
 		</div>
+
 		{# {{ encore_entry_script_tags('geoApi') }} #}
-		{{form_end(form)}}
 	</div>
 {% endblock %}

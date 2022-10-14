@@ -7,6 +7,7 @@ use Error;
 use App\Entity\User;
 use App\Entity\Profil;
 use App\Form\AddAddressesType;
+use App\Form\AddAddressFactureType;
 use App\Form\ProfilEditEmailType;
 use App\Form\ProfilEditInfoType;
 use App\Form\ProfilType;
@@ -271,7 +272,10 @@ class ProfilController extends AbstractController
         $adresse = new Addresses();
         $form = $this->createForm(AddAddressesType::class, $adresse);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        if (
+            $form->isSubmitted()
+            && $form->isValid()
+        ) {
             $userform = $form->getData();
             dd($userform);
         }
