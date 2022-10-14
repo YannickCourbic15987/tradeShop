@@ -189,7 +189,8 @@ if (select) {
   });
 
   function autoCompleteAdress(linkAddress) {
-    console.log(linkAddress);
+    // console.log(linkAddress);
+
     typeOfWay = [
       "Allée",
       "Avenue",
@@ -236,14 +237,14 @@ if (select) {
       "Villa",
       "Village",
     ];
-
-    linkAddress.splice(linkAddress.length - 1, 2);
+    let nb = linkAddress.length - 2;
+    linkAddress.splice(nb, 2);
 
     for (let item = 0; item < linkAddress.length; item++) {
       const match = new RegExp("[0-9]");
       let result = match.test(linkAddress[item]);
 
-      console.log(`${item} : ${linkAddress[item]} , ${result}`);
+      //   console.log(`${item} : ${linkAddress[item]} , ${result}`);
 
       if (result === true) {
         inputNumberOfStreet.value = linkAddress[item];
@@ -257,8 +258,6 @@ if (select) {
         }
       }
     }
-
-    console.log("ok", linkAddress.join(" "));
   }
 
   searchCity();
